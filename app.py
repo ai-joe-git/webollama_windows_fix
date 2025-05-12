@@ -7,7 +7,8 @@ import base64
 from flask_wtf.csrf import CSRFProtect
 import markdown
 
-load_dotenv()
+# Fix the encoding issue by explicitly specifying UTF-8
+load_dotenv(encoding="utf-8")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
@@ -349,7 +350,7 @@ def api_chat():
     
     try:
         response = requests.post(
-            f"{OLLAMA_API_URL}/chat", 
+            f"{OLLAMA_API_URL}/chat",
             json={"model": model, "messages": messages, "stream": False}
         )
         
